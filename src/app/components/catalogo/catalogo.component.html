@@ -1,0 +1,17 @@
+<div class="row">
+  @for (item of listaProductos; track $index) {
+    <div class="col-4 my-3">
+      <div class="card h-100">
+        <img [src]="item.imagen" class="card-img-top" alt="{{item.nombre}}" />
+        <div class="card-body">
+          <h5>{{ item.nombre }}</h5>
+          <p>{{ item.descripcion }}</p>
+          <p>S/ {{ item.precio }}</p>
+          <button class="btn btn-dark" (click)="agregarCarrito(item)">
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

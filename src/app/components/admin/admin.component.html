@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Panel de Administrador - EsencialFit</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card text-center mb-3 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Gestionar Usuarios</h5>
+          <p class="card-text">Crear, editar o eliminar usuarios.</p>
+          <!-- Navegación directa -->
+          <a class="btn btn-primary" [routerLink]="['/admin/usuarios']">Ir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-center mb-3 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Gestionar Productos</h5>
+          <p class="card-text">Añadir, editar o eliminar productos.</p>
+          <a class="btn btn-success" [routerLink]="['/admin/productos']">Ir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aquí se renderizan las vistas hijas de /admin/* -->
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,31 @@
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>N</th>
+            <th>Nombre del Producto</th>
+            <th>Precio Unit</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of listaCarrito; track $index) {
+            <tr>
+                <td>{{$index+1}}</td>
+                <td>{{item.producto.nombre}}</td>
+                <td>{{item.producto.precio}}</td>
+                <td>{{item.cantidad}}</td>
+                <td>{{item.producto.precio * item.cantidad}}</td>
+                <td class="text-center">
+                    <button class="btn btn-danger" (click)="eliminarItemCarrito(item.producto.idProducto!)">Eliminar <i class="fa-solid fa-trash"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-end fw-bold">Total</td>
+            <td class="fw-bold">{{totalCarrito}}</td>
+        </tr>
+    </tfoot>
+</table>

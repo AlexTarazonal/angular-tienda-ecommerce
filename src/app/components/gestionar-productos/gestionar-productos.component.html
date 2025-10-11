@@ -1,0 +1,73 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Gestionar Productos</h2>
+
+  <!-- Formulario de nuevo producto -->
+  <div class="card mb-4 p-3 shadow-sm">
+    <h5>Agregar Producto</h5>
+    <div class="mb-2">
+      <input class="form-control mb-2" placeholder="Nombre" [(ngModel)]="nuevoProducto.nombre">
+      <input class="form-control mb-2" placeholder="Descripción" [(ngModel)]="nuevoProducto.descripcion">
+      <input type="number" class="form-control mb-2" placeholder="Precio" [(ngModel)]="nuevoProducto.precio">
+      <input type="number" class="form-control mb-2" placeholder="Stock" [(ngModel)]="nuevoProducto.stock">
+      <input type="number" class="form-control mb-2" placeholder="Estado Producto" [(ngModel)]="nuevoProducto.idEstadoProducto">
+      <input class="form-control mb-2" placeholder="Imagen (URL)" [(ngModel)]="nuevoProducto.imagen">
+      <button class="btn btn-success" (click)="agregarProducto()">Agregar</button>
+    </div>
+  </div>
+
+  <!-- Lista de productos -->
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Estado</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos">
+        <td *ngIf="editProducto?.idProducto !== producto.idProducto">{{ producto.nombre }}</td>
+        <td *ngIf="editProducto?.idProducto === producto.idProducto">
+            <input [(ngModel)]="editProducto!.nombre" class="form-control">
+        </td>
+
+
+        <td *ngIf="editProducto?.idProducto !== producto.idProducto">{{ producto.descripcion }}</td>
+        <td *ngIf="editProducto?.idProducto === producto.idProducto">
+            <input [(ngModel)]="editProducto!.descripcion" class="form-control">
+
+        </td>
+
+        <td *ngIf="editProducto?.idProducto !== producto.idProducto">{{ producto.precio }}</td>
+        <td *ngIf="editProducto?.idProducto === producto.idProducto">
+            <input type="number" [(ngModel)]="editProducto!.precio" class="form-control">
+        </td>
+
+        <td *ngIf="editProducto?.idProducto !== producto.idProducto">{{ producto.stock }}</td>
+        <td *ngIf="editProducto?.idProducto === producto.idProducto">
+            <input type="number" [(ngModel)]="editProducto!.stock" class="form-control">
+        </td>
+
+        <td *ngIf="editProducto?.idProducto !== producto.idProducto">{{ producto.idEstadoProducto }}</td>
+        <td *ngIf="editProducto?.idProducto === producto.idProducto">
+            <input type="number" [(ngModel)]="editProducto!.idEstadoProducto" class="form-control">
+        </td>
+
+        <td *ngIf="editProducto?.idProducto !== producto.idProducto"><img [src]="producto.imagen" width="50"></td>
+        <td *ngIf="editProducto?.idProducto === producto.idProducto">
+            <input [(ngModel)]="editProducto!.imagen" class="form-control">
+        </td>
+
+        <td>
+          <button *ngIf="editProducto?.idProducto !== producto.idProducto" class="btn btn-primary btn-sm me-1" (click)="editarProducto(producto)">Editar</button>
+          <button *ngIf="editProducto?.idProducto === producto.idProducto" class="btn btn-success btn-sm me-1" (click)="actualizarProducto()">Guardar</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarProducto(producto.idProducto!)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
