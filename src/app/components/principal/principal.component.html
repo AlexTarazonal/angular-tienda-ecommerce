@@ -1,63 +1,95 @@
-<nav id="navbar-example2" class="navbar bg-warning px-3 mb-3">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <ul class="nav nav-pills">
+<nav id="navbar-example2" class="navbar navbar-expand-lg bg-warning shadow-sm px-4 py-2 mb-4 rounded-3">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-dark" href="#">
+      <i class="bi bi-basket2-fill me-2"></i>NutriStore
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarMenu"
+      aria-controls="navbarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="nav-link" href="#scrollspyHeading1">First</a>
+          <a class="nav-link fw-semibold" href="#scrollspyHeading1">Inicio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#scrollspyHeading2">Second</a>
+          <a class="nav-link fw-semibold" href="#scrollspyHeading2">Productos</a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
-            <ul class="dropdown-menu">
-               <li><a class="dropdown-item" href="#scrollspyHeading3">Third</a></li>
-               <li><a class="dropdown-item" href="#scrollspyHeading4">Fourth</a></li>
-               <li><hr class="dropdown-divider"></li>
-               <li><a class="dropdown-item" href="#scrollspyHeading5">Fifth</a></li>
-            </ul>
+          <a
+            class="nav-link dropdown-toggle fw-semibold"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Categorías
+          </a>
+          <ul class="dropdown-menu shadow border-0">
+            <li><a class="dropdown-item" href="#scrollspyHeading3">Proteínas</a></li>
+            <li><a class="dropdown-item" href="#scrollspyHeading4">Creatinas</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#scrollspyHeading5">Accesorios</a></li>
+          </ul>
         </li>
-        <li>
-            <button class="btn btn-dark" (click)="abrirCarrito()">
-               Mostrar Carrito {{listaCarrito.length}}
-            </button>
-        </li>
-    </ul>
+      </ul>
+
+      <button class="btn btn-dark position-relative" (click)="abrirCarrito()">
+        <i class="bi bi-cart4 me-1"></i> Carrito
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          *ngIf="listaCarrito.length > 0"
+        >
+          {{ listaCarrito.length }}
+        </span>
+      </button>
+    </div>
+  </div>
 </nav>
 
 <div class="container">
-    <h1>PROTEINAS</h1>
-    <app-catalogo  
-        [listaProductos]="listaProductos" 
-        (productoEnvia)="agregarCarrito($event)">
-    </app-catalogo>
-    @if(mostrarCarrito){
-        <div class="abrir-modal animacion fadeIn">
-            <div class="modal" style="display: block;" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Carrito de Compra</h5>
-                            <button type="button" (click)="abrirCarrito()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <app-carrito
-                                [listaCarrito]="listaCarrito" 
-                                [totalCarrito]="totalCarrito" 
-                                (idEnvia)="eliminarItemCarrito($event)">
-                            </app-carrito>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="abrirCarrito()">
-                                Cerrar
-                            </button>
-                            <button type="button" class="btn btn-primary" (click)="irAOrden()">
-                                Generar Pedido
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <h1 class="fw-bold text-center mb-4 text-warning">🥇 PROTEÍNAS</h1>
+
+  <app-catalogo
+    [listaProductos]="listaProductos"
+    (productoEnvia)="agregarCarrito($event)"
+  ></app-catalogo>
+
+  @if (mostrarCarrito) {
+  <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.6)">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title fw-bold"><i class="bi bi-cart-check me-2"></i>Carrito de Compras</h5>
+          <button type="button" (click)="abrirCarrito()" class="btn-close" aria-label="Close"></button>
         </div>
-        
-    }    
+        <div class="modal-body bg-light">
+          <app-carrito
+            [listaCarrito]="listaCarrito"
+            [totalCarrito]="totalCarrito"
+            (idEnvia)="eliminarItemCarrito($event)"
+          ></app-carrito>
+        </div>
+        <div class="modal-footer bg-white">
+          <button type="button" class="btn btn-outline-secondary" (click)="abrirCarrito()">
+            <i class="bi bi-x-circle me-1"></i> Cerrar
+          </button>
+          <button type="button" class="btn btn-success" (click)="irAOrden()">
+            <i class="bi bi-check-circle me-1"></i> Generar Pedido
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
 </div>

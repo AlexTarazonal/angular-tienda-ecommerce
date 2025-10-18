@@ -11,12 +11,12 @@ export const routes: Routes = [
   { path: 'catalogo', component: PrincipalComponent },
   { path: 'orden', component: OrderComponent },
 
-  // Página de panel (solo el menú)
+ 
   { path: 'admin', component: AdminComponent },
 
-  // Páginas independientes (vista completa)
+  
 
   { path: 'admin/productos', component: GestionarProductosComponent },
-
+ 
   { path: '**', redirectTo: '' },
 ];
