@@ -26,14 +26,14 @@ export class OrderComponent implements OnInit {
     telefono: '',
     direccion: '',
     tarjeta: '',
-    vencimiento: '', // del <input type="month"> -> 'YYYY-MM'
+    vencimiento: '', 
     ccv: '',
   };
 
   constructor(private router: Router, private ordenService: OrdenService) {}
 
   ngOnInit(): void {
-    // Tomamos primero sessionStorage (como en Principal), si no, localStorage
+   
     const raw = sessionStorage.getItem('carrito') || localStorage.getItem('carrito');
     try {
       const parsed = raw ? JSON.parse(raw) : [];
@@ -48,7 +48,7 @@ export class OrderComponent implements OnInit {
     this.calcularTotal();
   }
 
-  /** Convierte 'YYYY-MM' a 'MM/AA' (p.ej. 2026-12 -> 12/26) */
+ 
   private vencimientoToMMYY(v: string): string {
     if (!v || !/^\d{4}-\d{2}$/.test(v)) return v || '';
     const [y, m] = v.split('-');
@@ -101,15 +101,15 @@ export class OrderComponent implements OnInit {
     doc.save('boleta.pdf');
   }
 
-  // Validaciones simples de cliente (opcional pero útil)
+  
   private validoCliente(): boolean {
     const { nombre, correo, telefono, direccion, tarjeta, vencimiento, ccv } = this.cliente;
     if (!nombre || !correo || !telefono || !direccion || !tarjeta || !vencimiento || !ccv) return false;
     if (!/^\S+@\S+\.\S+$/.test(correo)) return false;
-    if (!/^\d{9,15}$/.test(telefono)) return false;        // 9-15 dígitos
-    if (!/^\d{13,19}$/.test(tarjeta.replace(/\s+/g, ''))) return false; // 13-19 dígitos (acepta distintas marcas)
-    if (!/^\d{2}\/\d{2}$/.test(this.vencimientoToMMYY(vencimiento))) return false; // MM/AA
-    if (!/^\d{3,4}$/.test(ccv)) return false;              // 3-4 dígitos
+    if (!/^\d{9,15}$/.test(telefono)) return false;        
+    if (!/^\d{13,19}$/.test(tarjeta.replace(/\s+/g, ''))) return false; 
+    if (!/^\d{2}\/\d{2}$/.test(this.vencimientoToMMYY(vencimiento))) return false; 
+    if (!/^\d{3,4}$/.test(ccv)) return false;              
     return true;
   }
 
@@ -129,12 +129,12 @@ export class OrderComponent implements OnInit {
       telefono: this.cliente.telefono,
       direccion: this.cliente.direccion,
       tarjeta: this.cliente.tarjeta.replace(/\s+/g, ''),
-      vencimiento: this.vencimientoToMMYY(this.cliente.vencimiento), // 'MM/AA'
+      vencimiento: this.vencimientoToMMYY(this.cliente.vencimiento), 
       ccv: this.cliente.ccv,
       subtotal: this.subtotal,
       envio: this.envio,
       total: this.total,
-      productos: this.listaCarrito, // 👈 el service hará JSON.stringify
+      productos: this.listaCarrito, 
     };
 
     this.ordenService.crearOrden(orden).subscribe({

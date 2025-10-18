@@ -11,10 +11,10 @@ import { CarritoComponent } from '../carrito/carrito.component';
 
 @Component({
   selector: 'app-principal',
-  standalone: true, // 👈 faltaba
-  imports: [CommonModule, CatalogoComponent, CarritoComponent], // 👈 CommonModule por *ngIf
+  standalone: true, 
+  imports: [CommonModule, CatalogoComponent, CarritoComponent], 
   templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css'], // 👈 plural correcto
+  styleUrls: ['./principal.component.css'], 
 })
 export class PrincipalComponent implements OnInit {
   listaProductos: Producto[] = [];
@@ -34,7 +34,7 @@ export class PrincipalComponent implements OnInit {
     this.calcularTotal();
   }
 
-  // --- Carrito ---
+  
 
   agregarCarrito(producto: Producto) {
     const existe = this.listaCarrito.find(i => i.producto.idProducto === producto.idProducto);
@@ -64,7 +64,7 @@ export class PrincipalComponent implements OnInit {
       (acc, item) => acc + item.cantidad * Number(item.producto.precio || 0),
       0
     );
-    // opcional: redondeo a 2 decimales
+   
     this.totalCarrito = Math.round(this.totalCarrito * 100) / 100;
   }
 
@@ -77,13 +77,13 @@ export class PrincipalComponent implements OnInit {
     this.router.navigate(['/orden']);
   }
 
-  // --- Storage helpers ---
+
 
   private cargarCarrito(): Detalle[] {
     try {
       const raw = sessionStorage.getItem('carrito') || localStorage.getItem('carrito');
       const parsed = raw ? JSON.parse(raw) : [];
-      // saneamos datos mínimos
+      
       if (Array.isArray(parsed)) {
         return parsed
           .filter(x => x && x.producto && typeof x.cantidad === 'number' && x.cantidad > 0)

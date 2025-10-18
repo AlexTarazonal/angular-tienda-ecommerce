@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../models/producto';
 
-type Estado = 1 | 2 | 3; // 1=Activo, 2=Inactivo, 3=Agotado
+type Estado = 1 | 2 | 3; 
 
 @Component({
   selector: 'app-gestionar-productos',
@@ -29,12 +29,12 @@ export class GestionarProductosComponent implements OnInit {
 
   editProducto: Producto | null = null;
 
-  // UI feedback
+ 
   loading = false;
   errorMsg: string | null = null;
   confirmMsg: string | null = null;
 
-  // Activa o desactiva el chequeo de accesibilidad de imágenes (opcional)
+  
   private readonly CHECK_IMG_REACHABLE = true;
 
   estados = [
@@ -43,32 +43,31 @@ export class GestionarProductosComponent implements OnInit {
     { id: 3 as Estado, label: 'Agotado' },
   ];
 
-  constructor(private productoService: ProductoService) {}
+  constructor(private productoService: ProductoService) { }
 
   ngOnInit(): void {
     this.cargarProductos();
   }
 
-  // ------------------- helpers -------------------
-
+  
   private normalizeSpaces(v: string) {
     return v.replace(/\s+/g, ' ').trim();
   }
 
-  /** Normaliza precio a string con punto decimal (acepta coma) */
+ 
   private precioNumRaw(v: number | string): string {
     return String(v ?? '').trim().replace(',', '.');
   }
 
-  /** true si tiene más de 2 decimales (y es forma numérica válida) */
+  
   private tieneMasDeDosDecimales(s: string): boolean {
     const m = s.match(/^\d+(?:\.(\d+))?$/);
-    if (!m) return false; // si no es numérico, se valida aparte
+    if (!m) return false; 
     const dec = m[1];
     return dec ? dec.length > 2 : false;
   }
 
-  /** Convierte a número SIN redondear silenciosamente */
+  
   private precioNum(v: number | string): number {
     const s = this.precioNumRaw(v);
     const n = Number(s);
@@ -77,14 +76,14 @@ export class GestionarProductosComponent implements OnInit {
 
   private isUrlImgOk(url: string) {
     if (!url || !url.trim()) return false;
-    if (url.length > 2048) return false;                // ← límite de longitud
+    if (url.length > 2048) return false;                
     if (!/^https?:\/\//i.test(url)) return false;
     if (/\s/.test(url)) return false;
     const lower = url.toLowerCase();
     return ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp', '.svg'].some(ext => lower.endsWith(ext));
   }
 
-  /** Chequea si la imagen carga (opcional). Timeout corto para no trabar la UI. */
+  
   private checkImagenAccesible(url: string, timeoutMs = 2500): Promise<boolean> {
     return new Promise(resolve => {
       const img = new Image();
@@ -133,33 +132,33 @@ export class GestionarProductosComponent implements OnInit {
     // Descripción
     if (!descripcion) return 'Descripción vacía o solo espacios';
     if (descripcion.length < 10) return 'Descripción muy corta (min 10)';
-    if (/^\d+$/.test(descripcion)) return 'La descripción no puede ser solo números'; // ← nuevo
+    if (/^\d+$/.test(descripcion)) return 'La descripción no puede ser solo números';
 
-    // Precio
+
     if (precioStr === '') return 'Precio vacío';
     if (!/^\d+(\.\d+)?$/.test(precioStr)) return 'Precio no numérico';
     if (/\s/.test(String(p.precio))) return 'Precio con espacio';
-    if (this.tieneMasDeDosDecimales(precioStr)) return 'Precio con más de dos decimales'; // ← nuevo
+    if (this.tieneMasDeDosDecimales(precioStr)) return 'Precio con más de dos decimales';
     if (!Number.isFinite(precio) || precio < 0.5) return 'Precio inválido (min 0.5)';
 
-    // Stock
-    if (String(p.stock).trim() === '') return 'Stock vacío'; // agregar/editar
+
+    if (String(p.stock).trim() === '') return 'Stock vacío';
     if (!stockOK) return 'Stock inválido (entero ≥ 0)';
 
-    // Estado
+
     if (!estadoOK) return 'Estado inválido (1 Activo, 2 Inactivo, 3 Agotado)';
 
-    // Imagen (forma)
+
     if (!imgOK) return 'URL de imagen inválida';
 
-    // Duplicados
+
     if (!isEdit && this.existeDuplicado(nombre)) return 'Nombre duplicado';
     if (isEdit && this.existeDuplicado(nombre, p.idProducto)) return 'Nombre duplicado';
 
     return null;
   }
 
-  // ------------------- acciones -------------------
+
 
   cargarProductos() {
     this.loading = true;
@@ -173,12 +172,12 @@ export class GestionarProductosComponent implements OnInit {
   async agregarProducto() {
     this.confirmMsg = null; this.errorMsg = null;
 
-    // normaliza antes de enviar
+
     const payload: Producto = {
       ...this.nuevoProducto,
       nombre: this.normalizeSpaces(this.nuevoProducto.nombre),
       descripcion: this.normalizeSpaces(this.nuevoProducto.descripcion),
-      precio: this.precioNum(this.nuevoProducto.precio),        // sin redondeo silencioso
+      precio: this.precioNum(this.nuevoProducto.precio),
       stock: Number(this.nuevoProducto.stock),
       idEstadoProducto: Number(this.nuevoProducto.idEstadoProducto) as Estado,
       imagen: String(this.nuevoProducto.imagen),
@@ -215,7 +214,7 @@ export class GestionarProductosComponent implements OnInit {
       ...this.editProducto,
       nombre: this.normalizeSpaces(this.editProducto.nombre),
       descripcion: this.normalizeSpaces(this.editProducto.descripcion),
-      precio: this.precioNum(this.editProducto.precio),         // sin redondeo silencioso
+      precio: this.precioNum(this.editProducto.precio),
       stock: Number(this.editProducto.stock),
       idEstadoProducto: Number(this.editProducto.idEstadoProducto) as Estado,
       imagen: String(this.editProducto.imagen),
