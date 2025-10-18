@@ -20,14 +20,14 @@
             <td>{{ i + 1 }}</td>
             <td>{{ item.producto.nombre }}</td>
             <td>{{ item.cantidad }}</td>
-            <td>S/. {{ item.producto.precio }}</td>
-            <td>S/. {{ item.producto.precio * item.cantidad }}</td>
+            <td>S/. {{ item.producto.precio | number:'1.2-2' }}</td>
+            <td>S/. {{ (item.producto.precio * item.cantidad) | number:'1.2-2' }}</td>
           </tr>
         </tbody>
       </table>
-      <p><strong>Subtotal:</strong> S/. {{ subtotal }}</p>
-      <p><strong>Envío:</strong> S/. {{ envio }}</p>
-      <p><strong>Total:</strong> S/. {{ total }}</p>
+      <p><strong>Subtotal:</strong> S/. {{ subtotal | number:'1.2-2' }}</p>
+      <p><strong>Envío:</strong> S/. {{ envio | number:'1.2-2' }}</p>
+      <p><strong>Total:</strong> S/. {{ total | number:'1.2-2' }}</p>
     </div>
 
     <!-- 🧾 Formulario de datos -->
@@ -54,15 +54,16 @@
         <h4 class="mt-4">Datos de pago</h4>
         <div class="mb-2">
           <label>Número de tarjeta</label>
-          <input type="text" maxlength="16" class="form-control" [(ngModel)]="cliente.tarjeta" name="tarjeta">
+          <input type="text" maxlength="19" class="form-control" placeholder="Solo dígitos, ej. 4111111111111111"
+                 [(ngModel)]="cliente.tarjeta" name="tarjeta">
         </div>
         <div class="mb-2">
           <label>Fecha de vencimiento</label>
-          <input type="month" class="form-control" [(ngModel)]="cliente.vencimiento" name="vencimiento">
+          <input type="month" class="form-control" [(ngModel)]="cliente.vencimiento" name="vencimiento" placeholder="YYYY-MM">
         </div>
         <div class="mb-2">
           <label>CCV</label>
-          <input type="text" maxlength="3" class="form-control" [(ngModel)]="cliente.ccv" name="ccv">
+          <input type="text" maxlength="4" class="form-control" [(ngModel)]="cliente.ccv" name="ccv">
         </div>
 
         <button type="button" class="btn btn-success mt-3" (click)="finalizarCompra()">

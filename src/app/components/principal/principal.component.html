@@ -11,28 +11,16 @@
       data-bs-target="#navbarMenu"
       aria-controls="navbarMenu"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link fw-semibold" href="#scrollspyHeading1">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold" href="#scrollspyHeading2">Productos</a>
-        </li>
+        <li class="nav-item"><a class="nav-link fw-semibold" href="#scrollspyHeading1">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link fw-semibold" href="#scrollspyHeading2">Productos</a></li>
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle fw-semibold"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Categorías
           </a>
           <ul class="dropdown-menu shadow border-0">
@@ -48,8 +36,7 @@
         <i class="bi bi-cart4 me-1"></i> Carrito
         <span
           class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          *ngIf="listaCarrito.length > 0"
-        >
+          *ngIf="listaCarrito.length > 0">
           {{ listaCarrito.length }}
         </span>
       </button>
@@ -62,34 +49,36 @@
 
   <app-catalogo
     [listaProductos]="listaProductos"
-    (productoEnvia)="agregarCarrito($event)"
-  ></app-catalogo>
+    (productoEnvia)="agregarCarrito($event)">
+  </app-catalogo>
 
   @if (mostrarCarrito) {
-  <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.6)">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg rounded-4">
-        <div class="modal-header bg-warning text-dark">
-          <h5 class="modal-title fw-bold"><i class="bi bi-cart-check me-2"></i>Carrito de Compras</h5>
-          <button type="button" (click)="abrirCarrito()" class="btn-close" aria-label="Close"></button>
-        </div>
-        <div class="modal-body bg-light">
-          <app-carrito
-            [listaCarrito]="listaCarrito"
-            [totalCarrito]="totalCarrito"
-            (idEnvia)="eliminarItemCarrito($event)"
-          ></app-carrito>
-        </div>
-        <div class="modal-footer bg-white">
-          <button type="button" class="btn btn-outline-secondary" (click)="abrirCarrito()">
-            <i class="bi bi-x-circle me-1"></i> Cerrar
-          </button>
-          <button type="button" class="btn btn-success" (click)="irAOrden()">
-            <i class="bi bi-check-circle me-1"></i> Generar Pedido
-          </button>
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.6)">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+          <div class="modal-header bg-warning text-dark">
+            <h5 class="modal-title fw-bold">
+              <i class="bi bi-cart-check me-2"></i>Carrito de Compras
+            </h5>
+            <button type="button" (click)="abrirCarrito()" class="btn-close" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-light">
+            <app-carrito
+              [listaCarrito]="listaCarrito"
+              [totalCarrito]="totalCarrito"
+              (idEnvia)="eliminarItemCarrito($event)">
+            </app-carrito>
+          </div>
+          <div class="modal-footer bg-white">
+            <button type="button" class="btn btn-outline-secondary" (click)="abrirCarrito()">
+              <i class="bi bi-x-circle me-1"></i> Cerrar
+            </button>
+            <button type="button" class="btn btn-success" (click)="irAOrden()">
+              <i class="bi bi-check-circle me-1"></i> Generar Pedido
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   }
 </div>

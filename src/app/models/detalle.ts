@@ -1,6 +1,6 @@
-import { Producto } from "./producto";
+import { Producto } from './producto';
 
-export class Detalle{
-    producto!:Producto
-    cantidad!:number
+export interface Detalle {
+  producto: Producto;
+  cantidad: number; 
 }
